@@ -1,23 +1,19 @@
+const snapshotSerializers = require('jest-preset-angular/build/serializers');
 module.exports = {
   displayName: 'jest-repro',
-  preset: '../../jest.preset.js',
+  testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
+  resolver: '@nrwl/jest/plugins/resolver',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/tsconfig.spec.json',
+      tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
-      astTransformers: {
-        before: [
-          'jest-preset-angular/build/InlineFilesTransformer',
-          'jest-preset-angular/build/StripStylesTransformer',
-        ],
-      },
     },
   },
-  coverageDirectory: '../../coverage/apps/jest-repro',
-  snapshotSerializers: [
-    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
-    'jest-preset-angular/build/AngularSnapshotSerializer.js',
-    'jest-preset-angular/build/HTMLCommentSerializer.js',
-  ],
+  testEnvironment: 'jsdom',
+  transform: {
+    '^.+\\.(ts|js|html)$': 'jest-preset-angular',
+  },
+  moduleFileExtensions: ['ts', 'html', 'js', 'json'],
+  snapshotSerializers,
 };
